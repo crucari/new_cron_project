@@ -6,7 +6,7 @@
 
     app = express();
 
-//deleting the log file from the server on the 1st of every month 
+//deleting the log file from the server on the 21st of every month 
   
       cron.schedule(" * * 21 * *", function() {
       console.log("---------------------");
@@ -20,4 +20,4 @@
     app.listen("3128");
     
 
-
+//cron-jobs-node 
