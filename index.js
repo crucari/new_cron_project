@@ -1,23 +1,24 @@
     // index.js
     /*global app*/ 
-    const cron = require("node-cron");  //task scheduler in JS for node.js
-    const express = require("express"); //powers the web server
-    const fs = require("fs"); //node file systme module 
-
+    /*global cron*/ 
+    const fs = require("fs");  
+    let shell = require("shelljs"); 
+    const express = require("express"); 
+    
     app = express();
 
 //deleting the log file from the server on the 21st of every month 
   
-      cron.schedule(" * * 21 * *", function() {
+      cron.schedule("59 23 * * *", function() {
       console.log("---------------------");
       console.log("Running Cron Job");
-      fs.unlink("./error.log", err => {
-        if (err) throw err;
-        console.log("Error file succesfully deleted");
+        if (shell.exec("sqlite3 database.sqlite .dump > data_dump.sql").code !== 0) {
+        shell.exit(1);
+      }
+      else{
+          shell.echo("Database backup completed"); 
+      }
       });
-    });
 
     app.listen("3128");
     
-
-//cron-jobs-node 
